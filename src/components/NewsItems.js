@@ -4,7 +4,7 @@ export class NewsItems extends Component {
   
   render() {
   
-    let {imageUrl,title,description,url} = this.props;
+    let {imageUrl,title,description,url,author,publishedAt,source} = this.props;
     return (
       <>
         <div className="card">
@@ -12,7 +12,9 @@ export class NewsItems extends Component {
             <div className="card-body">
               <h5 className="card-title">{title}</h5>
               <p className="card-text">{description}</p>
+              <footer className="blockquote-footer my-1 mb-2">By {author?author:'unknown'} on <cite title="Source Title">{new Date(publishedAt).toGMTString()}</cite></footer>
               <a href={url} rel="noreferrer" target="_blank" style={{display:'table',margin:'auto'}} className=" btn btn-sm btn-dark">Read More</a>
+              <span className="badge text-bg-success" style={{marginTop:'12px'}}>{source}</span>
             </div>
         </div>
         

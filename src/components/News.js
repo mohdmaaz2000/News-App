@@ -7,10 +7,9 @@ export class News extends Component {
   // Frist the Constructor component will run then render will run then componentDidMount Will run
 
   static defaultProps = {
-    country : 'in',
-    pageSize : 6,
-    heading : 'Top Stories'
-    
+    country: 'in',
+    heading: 'Top Stories'
+
   }
 
   static propTypes = {
@@ -30,68 +29,55 @@ export class News extends Component {
     }
   }
 
-  async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}`;
+  async updatePage() {
+    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({
-      loading : true
+      loading: true
     });
     let data = await fetch(url);
     let parsedData = await data.json();
-    // setState(this.article = parsedData.articles);
     this.setState({
       article: parsedData.articles,
-      page: this.state.page,
-      totalResults : parsedData.totalResults,
-      loading : false
+      loading: false
     });
+  }
+
+  async componentDidMount() {
+    this.updatePage();
   }
 
   prevPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
     this.setState({
-      loading : true
-    })
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({
-      article: parsedData.articles,
-      page: this.state.page - 1,
-      loading : false
+      page: this.state.page - 1
     });
+    this.updatePage();
   }
 
   nextPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
     this.setState({
-      loading : true
-    })
-    let data = await fetch(url);
-    let parsedData = await data.json();
-
-    this.setState({
-      article: parsedData.articles,
-      page: this.state.page + 1,
-      loading : false
+      page: this.state.page + 1
     });
-    console.log(this.state.page);
+    this.updatePage();
   }
+
 
 
   render() {
     return (
       <>
-      
+
         <div className="container">
           <h1 className='my-5 mb-3 mx-3' style={{ textAlign: 'center' }}>Student Times - {this.props.heading}</h1>
           <div className="row">
-          {this.state.loading && <Loader />}
+            {this.state.loading && <Loader />}
             {!this.state.loading && this.state.article.map((element) => {
               return (
                 <div key={element.url} className="col-md-4 my-3">
-                  <NewsItems imageUrl={element.urlToImage} title={element.title} description={element.description} url={element.url} />
+                  <NewsItems imageUrl={element.urlToImage} title={element.title} description={element.description} url={element.url} author={element.author} publishedAt={element.publishedAt} source={element.source['name']} />
                 </div>
               )
-            })}
+            })
+            }
             <div className="container d-flex justify-content-between">
               <button disabled={this.state.page <= 1} onClick={this.prevPage} className="btn btn-dark mx-3 my-3">&larr; Previous</button>
               <button disabled={(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))} className="btn btn-dark mx-3 my-3" onClick={this.nextPage}>Next &rarr;</button>
