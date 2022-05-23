@@ -1,10 +1,25 @@
 import React, { Component } from 'react'
 import Loader from './Loader';
 import NewsItems from './NewsItems'
+import { PropTypes } from 'prop-types';
 
 export class News extends Component {
   // Frist the Constructor component will run then render will run then componentDidMount Will run
 
+  static defaultProps = {
+    country : 'in',
+    pageSize : 6,
+    heading : 'Top Stories'
+    
+  }
+
+  static propTypes = {
+    country : PropTypes.string,
+    pageSize : PropTypes.number,
+    category : PropTypes.string,
+    apiKey : PropTypes.string,
+    heading : PropTypes.string
+  }
 
   constructor() {
     super();
@@ -16,7 +31,7 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}`;
     this.setState({
       loading : true
     });
@@ -32,7 +47,7 @@ export class News extends Component {
   }
 
   prevPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.props.apiKey}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
     this.setState({
       loading : true
     })
@@ -46,7 +61,7 @@ export class News extends Component {
   }
 
   nextPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
     this.setState({
       loading : true
     })
@@ -67,12 +82,12 @@ export class News extends Component {
       <>
       
         <div className="container">
-          <h1 className='my-5 mb-3 mx-3' style={{ textAlign: 'center' }}>Top Stories</h1>
+          <h1 className='my-5 mb-3 mx-3' style={{ textAlign: 'center' }}>Student Times - {this.props.heading}</h1>
           <div className="row">
           {this.state.loading && <Loader />}
             {!this.state.loading && this.state.article.map((element) => {
               return (
-                <div key={element.url} className="col-md-3 my-3 mx-3">
+                <div key={element.url} className="col-md-4 my-3">
                   <NewsItems imageUrl={element.urlToImage} title={element.title} description={element.description} url={element.url} />
                 </div>
               )
