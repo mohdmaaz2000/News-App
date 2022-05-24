@@ -25,7 +25,8 @@ export class News extends Component {
     this.state = {
       article: [],
       page: 1,
-      loading: false
+      loading: false,
+      totalResults : 0
     }
   }
 
@@ -38,7 +39,8 @@ export class News extends Component {
     let parsedData = await data.json();
     this.setState({
       article: parsedData.articles,
-      loading: false
+      loading: false,
+      totalResults : parsedData.totalResults
     });
   }
 
@@ -46,14 +48,14 @@ export class News extends Component {
     this.updatePage();
   }
 
-  prevPage = async () => {
+  prevPage = async() => {
     this.setState({
       page: this.state.page - 1
     });
     this.updatePage();
   }
 
-  nextPage = async () => {
+  nextPage = async() => {
     this.setState({
       page: this.state.page + 1
     });
