@@ -29,8 +29,8 @@ export class News extends Component {
     }
   }
 
-  async updatePage() {
-    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+  async updatePage(PageNo) {
+    let url = `https://newsapi.org/v2/top-headlines?category=${this.props.category}&country=${this.props.country}&apiKey=${this.props.apiKey}&page=${PageNo}&pageSize=${this.props.pageSize}`;
     this.setState({
       loading: true
     });
@@ -45,21 +45,21 @@ export class News extends Component {
   }
 
   componentDidMount() {
-    this.updatePage();
+    this.updatePage(this.state.page);
   }
 
   prevPage = async() => {
+    this.updatePage(this.state.page - 1);
     this.setState({
       page: this.state.page - 1
     });
-    this.updatePage();
   }
 
   nextPage = async() => {
+    this.updatePage(this.state.page + 1);
     this.setState({
       page: this.state.page + 1
     });
-    this.updatePage();
   }
 
 
