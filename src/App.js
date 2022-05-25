@@ -11,8 +11,9 @@ import {
 } from "react-router-dom";
 
 export default class App extends Component {
-  pageSize = 20;
+  pageSize = 12;
   apiKey = "8a4d9dbab4504776b2c6f3ec0508c635";
+  // REACT_APP_API_KEY="8a4d9dbab4504776b2c6f3ec0508c635"
   render() {
     return (
       <>

@@ -4,12 +4,11 @@ import NewsItems from './NewsItems'
 import { PropTypes } from 'prop-types';
 
 export class News extends Component {
-  // Frist the Constructor component will run then render will run then componentDidMount Will run
+  // First the Constructor component will run then render will run then componentDidMount Will run
 
   static defaultProps = {
     country: 'in',
     heading: 'Top Stories'
-
   }
 
   static propTypes = {
@@ -42,9 +41,10 @@ export class News extends Component {
       loading: false,
       totalResults : parsedData.totalResults
     });
+    console.log(this.state.page)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.updatePage();
   }
 
