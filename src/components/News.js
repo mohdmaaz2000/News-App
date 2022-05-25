@@ -1,4 +1,4 @@
-import React,{useState,useEffect}from 'react'
+import React,{useState,useEffect} from 'react'
 import Loader from './Loader';
 import NewsItems from './NewsItems'
 import { PropTypes } from 'prop-types';
@@ -40,7 +40,7 @@ export default function News(props)  {
     return (
       <>
 
-        <h1 className='my-5 mb-3 mx-3' style={{ textAlign: 'center' }}>Student Times - {props.heading}</h1>
+        <h1 className='mb-3 mx-3' style={{ textAlign: 'center',marginTop:'5rem' }}>Student Times - {props.heading}</h1>
         {loading && <Loader />}
         <InfiniteScroll
           dataLength={article.length}
