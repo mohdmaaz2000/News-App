@@ -1,3 +1,10 @@
+# News App
+Designed and developed a forum, where you can see the latest news of different categories using React as a framework.
+
+# Screenshots
+![Screenshot (355)](https://user-images.githubusercontent.com/97888220/236393800-3b224e67-e40a-478b-943a-abafc28e105c.png)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
